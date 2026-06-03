@@ -1,0 +1,16 @@
+public class Pangram {
+    public static boolean isPangram(String sentence) {
+        int checker = 0;
+        for (char c : sentence.toLowerCase().toCharArray()) {
+            if (c >= 'a' && c <= 'z') {
+                checker |= (1 << (c - 'a'));
+            }
+        }
+        return checker == (1 << 26) - 1;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(isPangram("the quick brown fox jumps over the lazy dog")); // true
+        System.out.println(isPangram("hello world")); // false
+    }
+}
