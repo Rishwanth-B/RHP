@@ -1,0 +1,65 @@
+import java.util.*;
+
+public class StringCombinations {
+
+    public static void subsets(String str, int index, String current) {
+        if (index == str.length()) {
+            if (!current.isEmpty())
+                System.out.println(current);
+            return;
+        }
+        subsets(str, index + 1, current + str.charAt(index));
+        subsets(str, index + 1, current);
+    }
+
+    public static void permutations(String str, String current) {
+        if (str.isEmpty()) {
+            System.out.println(current);
+            return;
+        }
+        for (int i = 0; i < str.length(); i++) {
+            char c = str.charAt(i);
+            String remaining = str.substring(0, i) + str.substring(i + 1);
+            permutations(remaining, current + c);
+        }
+    }
+
+    public static void combinations(String str, int r, int start, String current) {
+        if (current.length() == r) {
+            System.out.println(current);
+            return;
+        }
+        for (int i = start; i < str.length(); i++) {
+            combinations(str, r, i + 1, current + str.charAt(i));
+        }
+    }
+
+    public static void bitmaskSubsets(String str) {
+        int n = str.length();
+        int total = 1 << n;
+        for (int mask = 1; mask < total; mask++) {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < n; i++) {
+                if ((mask & (1 << i)) != 0)
+                    sb.append(str.charAt(i));
+            }
+            System.out.println(sb);
+        }
+    }
+
+    public static void main(String[] args) {
+        String s = "abc";
+
+        System.out.println("=== Subsets ===");
+        subsets(s, 0, "");
+
+        System.out.println("\n=== Permutations ===");
+        permutations(s, "");
+
+        System.out.println("\n=== Combinations of length 2 ===");
+        combinations(s, 2, 0, "");
+
+        System.out.println("\n=== Bitmask Subsets ===");
+        bitmaskSubsets(s);
+    }
+}
